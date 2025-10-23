@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎀 My Baby</title>
+      <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 30%, #f9a8d4 70%, #ec4899 100%);
+            overflow: hidden;
+            cursor: none;
+            position: relative;
+        }
+
+        /* Floating hearts animation */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: #f472b6;
+            opacity: 0.7;
+            animation: floatHeart 8s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 14px;
+            color: #fbbf24;
+            animation: sparkleAnim 2s ease-out forwards;
+            z-index: 10;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Ribbon decoration */
+        .ribbon {
+            position: absolute;
+            width: 200px;
+            height: 40px;
+            background: linear-gradient(45deg, #f472b6, #ec4899);
+            border-radius: 20px;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: ribbonFloat 6s ease-in-out infinite;
+            box-shadow: 0 4px 20px rgba(244, 114, 182, 0.3);
+            z-index: 2;
+        }
+
+        @keyframes ribbonFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(-5deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .photo-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .photo {
+            position: absolute;
+            width: 10vw;
+            height: 20vh;
+            border: 12px solid #fce7f3;
+            box-shadow: 
+                0 8px 25px rgba(236, 72, 153, 0.4),
+                0 0 0 3px #f472b6,
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            object-fit: cover;
+            pointer-events: none;
+            opacity: 1;
+            background: white;
+            transition: all 15s ease-in-out;
+            transform: scale(0.8);
+            backdrop-filter: blur(1px);
+        }
+
+        .photo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #f472b6, #ec4899, #be185d, #f472b6);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.02);
+            }
+        }
+
+        .hover-text {
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 22px;
+            font-weight: 600;
+            color: #be185d;
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            z-index: 10;
+            padding: 15px 30px;
+            background: rgba(252, 231, 243, 0.8);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(244, 114, 182, 0.3);
+        }
+
+        /* Lace pattern overlay */
+        .lace-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px, 30px 30px, 70px 70px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Bow decoration */
+        .bow {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            font-size: 40px;
+            color: #ec4899;
+            animation: bowPulse 4s ease-in-out infinite;
+            text-shadow: 2px 2px 8px rgba(236, 72, 153, 0.5);
+            z-index: 10;
+        }
+
+        @keyframes bowPulse {
+            0%, 100% {
+                transform: scale(1) rotate(-5deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .photo {
+                width: 20vw;
+                height: 30vh;
+            }
+            .hover-text {
+                font-size: 18px;
+                padding: 12px 20px;
+            }
+            .bow {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo {
+                width: 40vw;
+                height: 30vh;
+            }
+            .hover-text {
+                font-size: 16px;
+                bottom: 12%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-container"></div>
+    <div class="lace-overlay"></div>
+    <div class="bow">🎀</div>
+    
+    <div class="ribbon" style="top: 15%; left: 10%;"></div>
+    <div class="ribbon" style="top: 70%; right: 15%; animation-delay: -2s;"></div>
+    
+    <div class="photo-container"></div>
+    <div class="hover-text">Move your mouse/finger for another surprise</div>
+    
+    <!-- Audio element for background music -->
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="The Ridleys - Someday (Lyrics).mp4" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+<script>
+    const photoContainer = document.querySelector('.photo-container');
+    const heartsContainer = document.querySelector('.hearts-container');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    
+    function playBackgroundMusic() {
+        backgroundMusic.volume = 0.7;
+        backgroundMusic.play().catch(error => {
+            document.addEventListener('click', playMusicOnInteraction, { once: true });
+            document.addEventListener('touchstart', playMusicOnInteraction, { once: true });
+            document.addEventListener('mousemove', playMusicOnInteraction, { once: true });
+        });
+    }
+    
+    function playMusicOnInteraction() {
+        backgroundMusic.play().catch(error => {});
+    }
+    
+    window.addEventListener('load', playBackgroundMusic);
+    
+    const imageUrls = [
+        'reirei.jpg','1.jpg','2.jpg','3.jpg','4.jpg','5.jpg',
+        '6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg',
+        '12.jpg','13.jpg','14.jpg','15.jpg','16.jpg','17.jpg','18.jpg',
+        '19.jpg','20.jpg','21.jpg','22.jpg',
+    ];
+    
+    let currentImageIndex = 0;
+    const imageStack = [];
+    const maxImages = 15; 
+    const imageLifetime = 30000;
+
+    function createFloatingHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerHTML = ['💖','💕','💗','🌸','🎀','💝'][Math.floor(Math.random() * 6)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+        heart.style.animationDelay = Math.random() * 2 + 's';
+        heartsContainer.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+    }
+
+    function createSparkles(x, y) {
+        const sparkleCount = Math.random() * 3 + 2;
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = ['✨','⭐','💫','🌟'][Math.floor(Math.random() * 4)];
+            sparkle.style.left = (x + (Math.random() - 0.5) * 100) + 'px';
+            sparkle.style.top = (y + (Math.random() - 0.5) * 100) + 'px';
+            sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+    }
+
+function startImageStack() {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    const handleImageMovement = (event) => {
+        let clientX, clientY;
+        if (event.type === 'mousemove' || event.type === 'click') {
+            clientX = event.clientX;
+            clientY = event.clientY;
+        } else if (event.type === 'touchmove' || event.type === 'touchstart') {
+            const touch = event.touches[0] || event.changedTouches[0];
+            clientX = touch.clientX;
+            clientY = touch.clientY;
+        }
+
+        const newImage = document.createElement('img');
+        newImage.src = imageUrls[currentImageIndex];
+        newImage.className = 'photo';
+        
+        // Dynamic sizing
+        const imgWidth = Math.min(window.innerWidth * 0.45, 200);
+        const imgHeight = Math.min(window.innerHeight * 0.25, 250);
+        newImage.style.width = imgWidth + 'px';
+        newImage.style.height = imgHeight + 'px';
+
+        const offsetX = (Math.random() - 0.5) * 90;
+        const offsetY = (Math.random() - 0.5) * 90;
+
+        const maxLeft = window.innerWidth - imgWidth;
+        const maxTop = window.innerHeight - imgHeight;
+
+        const finalX = Math.min(Math.max(clientX + offsetX - imgWidth / 2, 0), maxLeft);
+        const finalY = Math.min(Math.max(clientY + offsetY - imgHeight / 2, 0), maxTop);
+
+        newImage.style.left = finalX + 'px';
+        newImage.style.top = finalY + 'px';
+
+        const randomRotation = (Math.random() * 35 - 15);
+        newImage.style.transform = `rotate(${randomRotation}deg) scale(0.8)`;
+
+        createSparkles(finalX + imgWidth / 2, finalY + imgHeight / 2);
+
+        photoContainer.appendChild(newImage);
+        imageStack.push(newImage);
+        currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+
+        if (imageStack.length > maxImages) {
+            const oldImage = imageStack.shift();
+            oldImage.style.opacity = 0;
+            setTimeout(() => oldImage.remove(), 8100);
+        }
+
+        setTimeout(() => {
+            newImage.style.opacity = 0;
+            setTimeout(() => newImage.remove(), 100);
+        }, imageLifetime);
+    };
+
+    if (isTouchDevice) {
+        photoContainer.addEventListener('touchmove', handleImageMovement);
+        photoContainer.addEventListener('touchstart', handleImageMovement); // ✅ tap support
+    } else {
+        photoContainer.addEventListener('mousemove', handleImageMovement);
+        photoContainer.addEventListener('click', handleImageMovement); // ✅ click support
+    }
+}
+
+    setInterval(createFloatingHeart, 1500);
+    startImageStack();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎀 Maby</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <style>
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background-color: #fce7f3;
+      color: #4a4a4a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-y: auto;   /* ✅ allow scrolling */
+      overflow-x: hidden; /* ✅ prevent sideways scroll */
+      margin: 0;
+    }
+    .page {
+      display: none;
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+      position: relative;
+      z-index: 10;
+    }
+    .page.active {
+      display: block;
+    }
+    .container {
+      background: #fff;
+      border: 2px solid #f7cce0;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 6px 25px rgba(247, 204, 224, 0.5);
+      position: relative;
+      z-index: 20;
+    }
+    .image-container img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .friend-photo {
+      max-width: 260px;
+      border-radius: 50%;
+      border: 3px solid #f7cce0;
+      display: block;
+      margin: 0 auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .friend-photo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(211,108,159,0.4);
+    }
+    h2 {
+      font-family: 'Great Vibes', cursive;
+      color: #d36c9f;
+      margin-bottom: 15px;
+    }
+    .btn {
+      background: #f7cce0;
+      color: #4a4a4a;
+      border: none;
+      padding: 10px 25px;
+      margin: 10px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: #ecb1cf;
+    }
+    .btn-green {
+      background: #e8d8eb;
+    }
+    .btn-green:hover {
+      background: #d9c0e2;
+    }
+    .message-text {
+      text-align: left;
+      margin-top: 15px;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    /* Floating hearts and ribbons */
+    .floating {
+      position: fixed;
+      bottom: -40px;
+      font-size: 1.5rem;
+      opacity: 0.8;
+      animation: floatUp 6s linear forwards;
+      z-index: 5;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+    }
+
+    /* 📱 Mobile responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+      .message-text {
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+      .btn {
+        font-size: 1rem;
+        padding: 8px 18px;
+      }
+      .friend-photo {
+        max-width: 140px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Envelope Page -->
+  <div class="page active" id="envelope">
+    <div class="container">
+      <div class="image-container">
+        <img src="envelope1.jpg" alt="Pink Envelope">
+      </div>
+      <h2>Do you want to open it?</h2>
+      <button class="btn" id="openBtn">Open it</button>
+    </div>
+  </div>
+
+  <!-- Letter Page -->
+  <div class="page" id="letter">
+    <div class="container">
+      <div style="margin-bottom: 20px;">
+        <img src="jazmine.jpg" alt="Friend Photo" class="friend-photo" id="jazmineImg">
+      </div>
+      <h2>To My Baby</h2>
+      <div class="message-text">
+        Hi Minnie 💗<br><br>
+       I just wanna say, walang salitang sapat para ma explain kung gaano ka kahalaga sa akin. I'm so proud of you and to the person you are becoming. I see the effort you put in, the way you keep going even when things get hard, 
+        the pressure you carry especially with school, and I want you to know it never goes unnoticed. I love your gift so much, it is one of the best gift I had. Simula noong dumating ka, I always wanted to see those smile, hear your voice and
+        laugh, I see my purpose once again. Thank you for being you, and for letting me be a part of your life. I cherish every moment na magkasama tayo and I'm looking forward sa mas maraming adventures pa natin together.
+        One day, makikita mo na worth it lahat ng 'to. Whatever comes next, nandito lang ako para sa'yo palagi.<br><br>
+        Nico 💌
+      </div>
+      <button class="btn btn-green" id="backBtn">Back to Envelope</button>
+    </div>
+  </div>
+
+  <script>
+    const envelopePage = document.getElementById('envelope');
+    const letterPage = document.getElementById('letter');
+    const openBtn = document.getElementById('openBtn');
+    const backBtn = document.getElementById('backBtn');
+    const jazmineImg = document.getElementById('jazmineImg');
+
+    let floatingInterval;
+
+    function createFloatingElement(symbol) {
+      const el = document.createElement('div');
+      el.classList.add('floating');
+      el.textContent = symbol;
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = Math.random() * 1.5 + 1 + 'rem';
+      el.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 7000);
+    }
+
+    openBtn.addEventListener('click', () => {
+      envelopePage.classList.remove('active');
+      letterPage.classList.add('active');
+
+      floatingInterval = setInterval(() => {
+        const symbol = Math.random() > 0.5 ? '♡' : '🎀';
+        createFloatingElement(symbol);
+      }, 500);
+    });
+
+    backBtn.addEventListener('click', () => {
+      letterPage.classList.remove('active');
+      envelopePage.classList.add('active');
+      clearInterval(floatingInterval);
+    });
+
+    // Redirect when ReiRei image is clicked
+    jazmineImg.addEventListener('click', () => {
+      window.location.href = "memories.html";
+    });
+  </script>
+
+</body>
+</html>
